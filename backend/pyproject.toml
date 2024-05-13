@@ -7,6 +7,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
+playwright = "^1.43.0"
+slack-sdk = "^3.27.1"
+pypdf2 = "^3.0.1"
 
 
 [build-system]
