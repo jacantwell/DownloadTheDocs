@@ -1,54 +1,80 @@
 import React, { useState } from 'react';
+import { Container, Button, Input } from "reactstrap";
+import { IconButton } from '@fluentui/react/lib/Button';
 import axios from 'axios';
+import { downloadFunction } from '../components/button_function';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import LoadingButton from '@mui/lab/LoadingButton';
+
+import './home.css';
+
+
+interface PdfDownloaderProps {
+  url: string;
+  downloadUrl: string;
+  inputText: string;
+  loading: boolean;
+}
 
 const PdfDownloader: React.FC = () => {
-  const [url, setUrl] = useState<string>('');
-  const [downloadUrl, setDownloadUrl] = useState<string>('');
+  const [inputText, setInputText] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
 
-  const handleDownload = async () => {
-    try {
-      const response = await axios({
-        url: url+"/download-pdf",
-        method: 'GET',
-        responseType: 'blob', // important
-      });
-      const file = new Blob([response.data], { type: 'application/pdf' });
-      const fileURL = URL.createObjectURL(file);
-      setDownloadUrl(fileURL);
-    } catch (error) {
-      console.error('Error fetching the PDF:', error);
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    if (!darkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">PDF Downloader</h1>
-        <input
-          type="text"
-          className="border border-gray-300 p-2 rounded mb-4 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter URL"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-        <button
-          onClick={handleDownload}
-          className="bg-blue-500 text-white p-2 rounded w-full hover:bg-blue-600 transition-colors"
-        >
-          Download PDF
-        </button>
-        {downloadUrl && (
-          <a
-            href={downloadUrl}
-            download="downloaded-file.pdf"
-            className="block mt-4 bg-green-500 text-white p-2 rounded text-center hover:bg-green-600 transition-colors"
-          >
-            Click here to download your PDF
-          </a>
-        )}
+      <>
+      <IconButton onClick={toggleDarkMode} color="inherit">
+        {darkMode === true ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
+        <p className='titletext'> DownloadTheDocs</p>
+        <div className='homebox'>
+          <Container className='center-container'>
+          <div>
+            <Input 
+              type="text" 
+              value={inputText} 
+              onChange={e => setInputText(e.target.value)} 
+            />
+          </div>
+          <div className='button-container'>
+            <LoadingButton
+              onClick={() => downloadFunction(inputText, setLoading)}
+              loading={loading}
+              className={loading ? 'submitbutton-loading' : 'submitbutton'}>
+              Submit
+            </LoadingButton>
+          </div>
+          </Container>
+        </div>
+        <div className='bottom-container'>
+        <div className='box'>
+          <p>Text 1</p>
+        </div>
+        <div className='box'>
+          <p>Text 2</p>
+        </div>
+        <div className='box'>
+          <p>Text 3</p>
+        </div>
+        <div className='box'>
+          <p>Text 4</p>
+        </div>
+        <div className='box'>
+          <p>Text 5</p>
+        </div>
       </div>
-    </div>
-  );
+      </>
+    );
 };
 
 export default PdfDownloader;
