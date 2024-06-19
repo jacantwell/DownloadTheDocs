@@ -6,14 +6,23 @@ class Scraper():
     def __init__(self, id: str) -> None:
         self.id = id
 
+    def get_name(self, url:str):
+        if url.startswith("http://"):
+            return url.replace("http://", "").split("/")[0]
+        elif url.startswith("https://"):
+            return url.replace("https://", "").split("/")[0]
+        else:
+            return url.split("/")[0]
+
     async def get_links_and_generate_pdfs(self, url:str):
         
-        name = url.replace("https://", "").split("/")[0]
+        # Get the name of the website
+        name = self.get_name(url)
         id_str = str(self.id)
+
         # if no directory exists, create one
         if not os.path.exists("processes/" + id_str):
             os.makedirs("processes/" + id_str)
-
 
         # Use playwright to launch a browser and navigate to the URL
         async with async_playwright() as p:
@@ -26,7 +35,6 @@ class Scraper():
             )
 
             for _, link in enumerate(links):
-
                 if url in link:
                     try:
                         await page.goto(link)

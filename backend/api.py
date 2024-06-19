@@ -1,9 +1,7 @@
-from fastapi import FastAPI, HTTPException, APIRouter
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from scraper import Scraper
-from mangum import Mangum
 from fastapi.middleware.cors import CORSMiddleware
-import os
 from pydantic import BaseModel
 import uuid
 
@@ -28,7 +26,6 @@ async def create_pdf(params: PDFRequest):
         
         id = uuid.uuid4()
 
-        print(params.url)
         # Create a Scraper instance with the provided URL
         scraper = Scraper(id)
 
@@ -40,16 +37,19 @@ async def create_pdf(params: PDFRequest):
 
         return result
 
-class DownloadRequest(BaseModel):
-    id: str
 
-@app.get("/download/{id}")
-def download_pdf(id: str):
+@app.get("/download/{url}")
+def download_pdf(url: str):
+    
+    # Convert _ in url back to /
+    url = url.replace("_", "/")
+    
     try:
 
         # Create a Scraper instance with the provided URL
         scraper = Scraper(id)
 
+        name = scraper.get_name(url)
 
         # Define the PDF file as a response
         return FileResponse(f"processes/{id}/merged.pdf", filename=f"merged.pdf", media_type='application/pdf')

@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { Container, Button, Input } from "reactstrap";
+import { Container, Button, Input, List } from "reactstrap";
 import { IconButton } from '@fluentui/react/lib/Button';
 import axios from 'axios';
 import { downloadFunction } from '../components/button_function';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LoadingButton from '@mui/lab/LoadingButton';
-
-import './home.css';
+import PreviewBoxSnippet from '../components/preview_box';
+import '../style/home.css';
 
 
 interface PdfDownloaderProps {
   url: string;
-  downloadUrl: string;
+  downloadUrlList: string[];
   inputText: string;
   loading: boolean;
 }
@@ -21,6 +21,7 @@ const PdfDownloader: React.FC = () => {
   const [inputText, setInputText] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [downloadUrlList, setDownloadUrlList] = useState<string[]>([]);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -48,7 +49,7 @@ const PdfDownloader: React.FC = () => {
           </div>
           <div className='button-container'>
             <LoadingButton
-              onClick={() => downloadFunction(inputText, setLoading)}
+              onClick={() => downloadFunction(inputText, downloadUrlList, setDownloadUrlList, setLoading)}
               loading={loading}
               className={loading ? 'submitbutton-loading' : 'submitbutton'}>
               Submit
@@ -56,23 +57,7 @@ const PdfDownloader: React.FC = () => {
           </div>
           </Container>
         </div>
-        <div className='bottom-container'>
-        <div className='box'>
-          <p>Text 1</p>
-        </div>
-        <div className='box'>
-          <p>Text 2</p>
-        </div>
-        <div className='box'>
-          <p>Text 3</p>
-        </div>
-        <div className='box'>
-          <p>Text 4</p>
-        </div>
-        <div className='box'>
-          <p>Text 5</p>
-        </div>
-      </div>
+          <PreviewBoxSnippet title='Preview' pdfURLlist={downloadUrlList} />
       </>
     );
 };
