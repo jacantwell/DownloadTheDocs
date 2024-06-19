@@ -1,0 +1,16 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: fit-content;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.App {
+  text-align: center;
+  background-image: url("assets/background.svg");
+  background-size: cover; 
+}

@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "scraper"
+version = "0.1.0"
+description = ""
+authors = ["Jasper Cantwell <jasper@digilab.co.uk>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+playwright = "^1.43.0"
+slack-sdk = "^3.27.1"
+pypdf2 = "^3.0.1"
+flask = "^3.0.3"
+llama-index-readers-file = "^0.1.23"
+pymupdf = "^1.24.4"
+llama-index-embeddings-openai = "^0.1.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
