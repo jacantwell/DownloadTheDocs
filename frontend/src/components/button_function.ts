@@ -17,7 +17,7 @@ export async function downloadFunction(url: string, downloadUrlList:string[],  s
         do {
             // convert / in url to _
             url = url.replace(/\//g, '_');
-            downloadResponse = await axios.get('http://127.0.0.1:8000/download/'+url, { responseType: 'blob' });
+            downloadResponse = await axios.get('http://127.0.0.1:8000/download/'+pid, { responseType: 'blob' });
         } while (downloadResponse.status !== 200);
 
         // At this point, downloadResponse.data should contain the PDF data

@@ -18,51 +18,46 @@ app.add_middleware(
 
 app.mount("/api", app)
 
+
 class PDFRequest(BaseModel):
     url: str
 
+
 @app.post("/create")
 async def create_pdf(params: PDFRequest):
-        
-        id = uuid.uuid4()
 
-        # Create a Scraper instance with the provided URL
-        scraper = Scraper(id)
+    id = uuid.uuid4()
 
-        # Run the methods asynchronously if they support it
-        result = await scraper.get_links_and_generate_pdfs(params.url)
-        
-        # Assume merge_pdfs() is synchronous
-        result = scraper.merge_pdfs(result["name"])
+    # Create a Scraper instance with the provided URL
+    scraper = Scraper(id)
 
-        return result
+    # Run the methods asynchronously if they support it
+    result = await scraper.get_links_and_generate_pdfs(params.url)
+
+    # Assume merge_pdfs() is synchronous
+    result = scraper.merge_pdfs(result["name"])
+
+    return result
 
 
-@app.get("/download/{url}")
-def download_pdf(url: str):
-    
-    # Convert _ in url back to /
-    url = url.replace("_", "/")
-    
+@app.get("/download/{process_id}")
+def download_pdf(process_id: str):
+
     try:
-
-        # Create a Scraper instance with the provided URL
-        scraper = Scraper(id)
-
-        name = scraper.get_name(url)
-
         # Define the PDF file as a response
-        return FileResponse(f"processes/{id}/merged.pdf", filename=f"merged.pdf", media_type='application/pdf')
-    
+        return FileResponse(
+            f"processes/{process_id}/merged.pdf",
+            filename=f"merged.pdf",
+            media_type="application/pdf",
+        )
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
 
 
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the PDF Scraper API!"}
-
 
 
 # # Define the Lambda handler
@@ -76,6 +71,7 @@ def read_root():
 #     else:
 #         return handler(event, context)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
