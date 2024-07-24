@@ -14,6 +14,8 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [downloadUrlList, setDownloadUrlList] = useState<string[]>([]);
+  const [pdfNames, setpdfNames] = useState<string[]>([]);
+
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -41,7 +43,7 @@ const HomePage: React.FC = () => {
           </div>
           <div className='button-container'>
             <LoadingButton
-              onClick={() => downloadFunction(inputText, downloadUrlList, setDownloadUrlList, setLoading)}
+              onClick={() => downloadFunction(inputText, downloadUrlList, setDownloadUrlList, pdfNames, setpdfNames, setLoading)}
               loading={loading}
               className={loading ? 'submitbutton-loading' : 'submitbutton'}>
               Submit
@@ -49,7 +51,7 @@ const HomePage: React.FC = () => {
           </div>
           </Container>
         </div>
-          <PreviewBoxSnippet title='Preview' pdfURLlist={downloadUrlList} />
+          <PreviewBoxSnippet title='Preview' pdfURLlist={downloadUrlList} pdfNames={pdfNames} />
       </>
     );
 };

@@ -3,6 +3,7 @@ import "../style/home.css";
 interface PreviewBoxProps {
     title: string;
     pdfURLlist: string[];
+    pdfNames: string[];
 }
 
 const PreviewBox: React.FC<PreviewBoxProps> = (props) => {
@@ -13,8 +14,10 @@ const PreviewBox: React.FC<PreviewBoxProps> = (props) => {
 
     if (props.pdfURLlist.length === 0) {
         return (
-            <div className='box'>
-                <p>No PDFs available</p>
+            <div className="bottom-container">
+                <div className='box'>
+                    <p>No PDFs Requested</p>
+                </div>
             </div>
         );
     }
@@ -23,7 +26,7 @@ const PreviewBox: React.FC<PreviewBoxProps> = (props) => {
         <div className="bottom-container">
             {props.pdfURLlist.map((url, index) => (
                 <div className='box' onClick={() => handleDownload(url)} key={index}>
-                    <p>Preview {index}</p>
+                    <p>{props.pdfNames[index]}</p>
                 </div>
             ))}
         </div>
