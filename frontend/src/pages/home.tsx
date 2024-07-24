@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Container, Button, Input, List } from "reactstrap";
+import { Container, Input } from "reactstrap";
 import { IconButton } from '@fluentui/react/lib/Button';
-import axios from 'axios';
 import { downloadFunction } from '../components/button_function';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -10,14 +9,7 @@ import PreviewBoxSnippet from '../components/preview_box';
 import '../style/home.css';
 
 
-interface PdfDownloaderProps {
-  url: string;
-  downloadUrlList: string[];
-  inputText: string;
-  loading: boolean;
-}
-
-const PdfDownloader: React.FC = () => {
+const HomePage: React.FC = () => {
   const [inputText, setInputText] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(false);
@@ -62,4 +54,4 @@ const PdfDownloader: React.FC = () => {
     );
 };
 
-export default PdfDownloader;
+export default HomePage;
