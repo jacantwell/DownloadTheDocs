@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+*.so
+*.dylib
+*.dll
+*.venv
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pip-wheel-metadata/
+
+# FastAPI
+.env
+.env.*
+.venv
+instance/
+.mypy_cache/
+.pytest_cache/
+.coverage
+.tox/
+.hypothesis/
+.vscode/
+.idea/

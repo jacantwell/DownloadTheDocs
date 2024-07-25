@@ -9,10 +9,10 @@ This is a simple python scarper that can be used to tunr any webpage into a down
 
 To deploy the application locally just follow these steps.
 
-1. Navigate to the backend directory and install the dependencies. You have to explicitly install playwright.
+1. Navigate to the api directory and install the dependencies. You have to explicitly install playwright.
 
 ```bash 
-cd backend
+cd api
 poetry install --no-root
 poetry run playwright install
 ```
